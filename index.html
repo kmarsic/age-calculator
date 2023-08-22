@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,700;1,400;1,800&display=swap" rel="stylesheet">  
+  <link rel="stylesheet" href="assets/styles.css">
+
+  
+  <title>Frontend Mentor | Age calculator app</title>
+</head>
+<body>
+  <div class="wrapper">
+    <img id="arrow" src="assets/images/icon-arrow.svg">
+    <div class="inner-top-wrapper">
+      <div class="input-field">
+        <p class="label">DAY</p>
+        <input type="number" id="day-input" max="31" placeholder="DD" required>
+        <p class="error-msg day"></p>
+      </div>
+      <div class="input-field">
+        <p class="label">MONTH</p>
+        <input type="number" id="month-input" placeholder="MM" required max="12">
+        <p class="error-msg month"></p>
+      </div>
+      <div class="input-field">
+        <p class="label">YEAR</p>
+        <input type="number" id="year-input" placeholder="YYYY" required min="1" >
+        <p class="error-msg year"></p>
+      </div>
+    </div>
+    <hr>
+    <div class="inner-bot-wrapper">
+        <p class="output-text"><span class="output-num">--</span> years</p>
+        <p class="output-text"><span class="output-num">--</span> months</p>
+        <p class="output-text"><span class="output-num">--</span> days</p>
+    </div>
+  </div>
+  <script src="assets/script.js"></script>
+</body>
+</html>
