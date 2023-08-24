@@ -39,10 +39,38 @@ function clearError() {
     
 }
 
+const numbers = "0123456789";
+
+let interval = null;
+
+function animateOutput(output, originalValue) {
+    let iteration = 0;
+    const totalIterations = originalValue.length; 
+    let intervalId = setInterval(() => {
+        output.innerHTML = originalValue
+            .split("")
+            .map((letter, index) => {
+                if (index < iteration) {
+                    return originalValue[index];
+                }
+                return numbers[Math.floor(Math.random() * 26)];
+            })
+            .join("");
+
+        if (iteration >= totalIterations) {
+            clearInterval(intervalId);
+        }
+
+        iteration++;
+    }, 30);
+}
+
 function updateCalculator (days) {
     dayOutput.innerHTML = days - 1;
-    monthOutput.innerHTML = Math.floor(days / 30.417);
-    yearOutput.innerHTML = Math.floor(days / 365);
+    const yearCalc = Math.floor(days / 365); 
+    const monthCalc = Math.floor(days / 30.417);
+    monthOutput.innerHTML = monthCalc;
+    yearOutput.innerHTML = yearCalc; 
 }
 
 function errorHandle () {
@@ -66,7 +94,7 @@ function errorHandle () {
             : inputDate.getTime() > currentDate.getTime()
             ? (yearError.innerHTML = "Must be in the past", addErrorStateStyle(yearInput,labelYear),false)
             : dayInput.value > 30 && [4, 6, 9, 11].includes(Number(monthInput.value))
-            ? (dayError.innerHTML = "Must be a valid date", monthError.innerHTML = "Must be a valid date", false)
+            ? (dayError.innerHTML = "Must be a valid date", monthError.innerHTML = "Must be a valid date",addErrorStateStyle(dayInput, labelDay), addErrorStateStyle(monthInput,labelMonth), false)
             : true
             
 
@@ -86,9 +114,13 @@ function calculateTime() {
     const currentDate = new Date();
     const inputDate = new Date(Number(yearInput.value), Number(monthInput.value - 1), Number(dayInput.value));
     const differenceDays = Math.round((currentDate.getTime() - inputDate.getTime()) / 86400000);
-
-    updateCalculator(differenceDays);
     clearError(); 
+    updateCalculator(differenceDays)
 }
 
-arrow.addEventListener("click", calculateTime);
+arrow.addEventListener("click", () => {
+    calculateTime();
+    animateOutput(dayOutput, dayOutput.innerHTML);
+    animateOutput(monthOutput, monthOutput.innerHTML);
+    animateOutput(yearOutput, yearOutput.innerHTML);
+});
