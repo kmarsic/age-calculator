@@ -4,6 +4,7 @@
     --light-grey: hsl(0, 0%, 86%);
     --smokey-grey: hsl(0, 1%, 44%);
     --off-black: hsl(0, 0%, 8%);
+    --light-red: hsl(0, 100%, 67%);
 }
 
 *,
@@ -13,18 +14,6 @@
   margin:0;
   padding:0;
   font-family: 'Poppins', sans-serif;
-}
-
-#arrow {
-    width: 60px;
-    background-color:var(--primary-purple);
-    padding: 1rem;
-    position: absolute;
-    left: 195px;
-    top: 160px;
-    z-index: 1;
-    cursor: pointer;
-    border-radius: 50%;
 }
 
 input::-webkit-outer-spin-button,
@@ -49,13 +38,40 @@ input {
     font-size: 24px;
     width: 100%;
     border-radius: 0.5rem;
-    border:none;
-    outline: 1px solid hsla(0, 1%, 44%, 0.2);
+    border:1px solid hsla(0, 1%, 44%, 0.2);
     cursor: pointer;
 }
 
 input:focus {
-    outline: 2px solid hsla(0, 1%, 44%, 0.5);
+    outline: 1px solid hsla(259, 100%, 65%, 0.8);
+}
+
+.img-wrap  {
+    position:absolute;
+    left: 200px;
+    top: 175px;
+    z-index: 1;
+}
+
+#arrow {
+    width: 60px;
+    background-color:var(--primary-purple);
+    padding: 1rem;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+#arrow:hover {
+    background-color: var(--off-black);
+}
+
+
+.invalid-state-text {
+    color: var(--light-red);
+}
+
+.invalid-state-style {
+    outline: 1px solid var(--light-red);
 }
 
 hr {
@@ -64,7 +80,11 @@ hr {
 }
 
 .error-msg {
-    visibility: hidden;
+    margin-top: 0.5rem;
+    font-size: 12px;
+    font-style: italic;
+    color: var(--light-red); 
+    height: 1ch;
 }
 
 .wrapper {
@@ -87,10 +107,10 @@ hr {
 }
 
 .inner-bot-wrapper {
-    font-size: 64px;
+    font-size: 54px;
     padding: 1rem;
 }
-
+j
 .output-text {
     font-style: italic;
     font-weight: 800;
@@ -108,6 +128,12 @@ hr {
 
     .inner-bot-wrapper {
         font-size: 76px;
+    }
+
+    .img-wrap  {
+        left: 580px;
+        top: 165px;
+        z-index: 1;
     }
 
     #arrow {
