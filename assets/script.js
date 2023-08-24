@@ -12,12 +12,12 @@ const labelDay = document.getElementById("label-day");
 const labelMonth = document.getElementById("label-month");
 const labelYear = document.getElementById("label-year");
 
-function addErrorStateStyle (input, label) {
+function addErrorStyle (input, label) {
     label.classList.add("invalid-state-text");
     input.classList.add("invalid-state-style");
 }
 
-function removeErrorStateStyle() {
+function removeErrorStyle() {
     labelDay.classList.remove("invalid-state-style")
     labelMonth.classList.remove("invalid-state-style")
     labelYear.classList.remove("invalid-state-style")
@@ -62,7 +62,7 @@ function animateOutput(output, originalValue) {
         }
 
         iteration++;
-    }, 30);
+    }, 50);
 }
 
 function updateCalculator (days) {
@@ -74,28 +74,69 @@ function updateCalculator (days) {
 }
 
 function errorHandle () {
+    
 
-    const currentDate = new Date();
-    const inputDate = new Date(Number(yearInput.value), Number(monthInput.value) - 1, Number(dayInput.value));
+    const isInputValid = () => {
+        const currentDate = new Date();
+        const inputDate = new Date(Number(yearInput.value), Number(monthInput.value) - 1, Number(dayInput.value));
+        const isRequired = value => value === '';
+        const isInvalidDay = value => value > 31;
+        const isInvalidMonth = value => value > 12;
+        const isInvalidYear = value => value.getTime() > currentDate.getTime();
 
-    const isInputValid =
-        dayInput.value > 31 && monthInput.value > 12 && inputDate.getTime() > currentDate.getTime()
-            ? (monthError.innerHTML = 'Must be a valid month', dayError.innerHTML = 'Must be a valid day', yearError.innerHTML = "Must be in the past", addErrorStateStyle(dayInput, labelDay),addErrorStateStyle(monthInput, labelMonth), addErrorStateStyle(yearInput, labelYear), false) // 3 at once
-            : dayInput.value > 31 && inputDate.getTime() > currentDate.getTime() ? (dayError.innerHTML = "Must be a valid day",yearError.innerHTML = "Must be a valid date",addErrorStateStyle(dayInput, labelDay), addErrorStateStyle(yearInput,labelYear), false) // Day and year error
-            : monthInput.value > 12 && inputDate.getTime() > currentDate.getTime() ? (yearError.innerHTML = "Must be in the past",monthError.innerHTML = "Must be a valid month",addErrorStateStyle(monthInput, labelMonth), addErrorStateStyle(yearInput,labelYear), false) //Month and year error
-            : monthInput.value > 12 && dayInput.value > 31 ? (monthError.innerHTML = 'Must be a valid month', addErrorStateStyle(monthInput, labelMonth),dayError.innerHTML = 'Must be a valid day', addErrorStateStyle(dayInput, labelDay),false)
-            : monthInput.value > 12
-            ? (monthError.innerHTML = 'Must be a valid month', addErrorStateStyle(monthInput, labelMonth), false)
-            : dayInput.value > 31
-            ? (dayError.innerHTML = 'Must be a valid day', addErrorStateStyle(dayInput, labelDay), false)
-            : dayInput.value > 28 && monthInput.value == 2
-            ? (dayError.innerHTML = "Must be a valid date",
-            monthError.innerHTML = "Must be a valid date", addErrorStateStyle(dayInput, labelDay), addErrorStateStyle(monthInput,labelMonth), false)
-            : inputDate.getTime() > currentDate.getTime()
-            ? (yearError.innerHTML = "Must be in the past", addErrorStateStyle(yearInput,labelYear),false)
-            : dayInput.value > 30 && [4, 6, 9, 11].includes(Number(monthInput.value))
-            ? (dayError.innerHTML = "Must be a valid date", monthError.innerHTML = "Must be a valid date",addErrorStateStyle(dayInput, labelDay), addErrorStateStyle(monthInput,labelMonth), false)
-            : true
+        if (isRequired(dayInput.value) || isRequired(monthInput.value) ||isRequired(yearInput.value)) {
+            dayError.innerHTML = isRequired(dayInput.value) ? (addErrorStyle(dayInput, labelDay), 'This field is required') : '';
+            monthError.innerHTML = isRequired(monthInput.value) ? (addErrorStyle(monthInput, labelMonth), 'This field is required') : '';;
+            yearError.innerHTML = isRequired(yearInput.value) ? (addErrorStyle(yearInput, labelYear), 'This field is required') : '';
+            return false
+
+        }
+
+        if (isInvalidMonth(monthInput.value) || isInvalidDay(dayInput.value) || yearInput.value > 2023) {
+            dayError.innerHTML = isInvalidDay(dayInput.value) ? (addErrorStyle(dayInput, labelDay),'Must be a valid day') : '';;
+            monthError.innerHTML = isInvalidMonth(monthInput.value) ? (addErrorStyle(monthInput, labelMonth),'Must be a valid month') : '';
+            yearError.innerHTML = yearInput.value > 2023 ? (addErrorStyle(yearInput, labelYear),'Must be in the past') : '';
+            return false
+        }
+
+        if (dayInput.value > 30 && [4, 6, 9, 11].includes(Number(monthInput.value))) {
+            dayError.innerHTML = 'Must be a valid date';
+            addErrorStyle(dayInput, labelDay);
+            monthError.innerHTML = 'Must be a valid date';
+            addErrorStyle(monthInput, labelMonth);
+            return false
+        }
+
+        if (dayInput.value > 28 && monthInput.value == 2) {
+            dayError.innerHTML = 'Must be a valid date';
+            addErrorStyle(dayInput, labelDay);
+            monthError.innerHTML = 'Must be a valid date';
+            addErrorStyle(monthInput, labelMonth)
+            return false
+        }
+
+        return true
+
+
+
+    };
+        // dayInput.value > 31 && monthInput.value > 12 && inputDate.getTime() > currentDate.getTime()
+        //     ? (monthError.innerHTML = 'Must be a valid month', dayError.innerHTML = 'Must be a valid day', yearError.innerHTML = "Must be in the past", addErrorStyle(dayInput, labelDay),addErrorStyle(monthInput, labelMonth), addErrorStyle(yearInput, labelYear), false) // 3 at once
+        //     : dayInput.value > 31 && inputDate.getTime() > currentDate.getTime() ? (dayError.innerHTML = "Must be a valid day",yearError.innerHTML = "Must be a valid date",addErrorStyle(dayInput, labelDay), addErrorStyle(yearInput,labelYear), false) // Day and year error
+        //     : monthInput.value > 12 && inputDate.getTime() > currentDate.getTime() ? (yearError.innerHTML = "Must be in the past",monthError.innerHTML = "Must be a valid month",addErrorStyle(monthInput, labelMonth), addErrorStyle(yearInput,labelYear), false) //Month and year error
+        //     : monthInput.value > 12 && dayInput.value > 31 ? (monthError.innerHTML = 'Must be a valid month', addErrorStyle(monthInput, labelMonth),dayError.innerHTML = 'Must be a valid day', addErrorStyle(dayInput, labelDay),false)
+        //     : monthInput.value > 12
+        //     ? (monthError.innerHTML = 'Must be a valid month', addErrorStyle(monthInput, labelMonth), false)
+        //     : dayInput.value > 31
+        //     ? (dayError.innerHTML = 'Must be a valid day', addErrorStyle(dayInput, labelDay), false)
+        //     : dayInput.value > 28 && monthInput.value == 2
+        //     ? (dayError.innerHTML = "Must be a valid date",
+        //     monthError.innerHTML = "Must be a valid date", addErrorStyle(dayInput, labelDay), addErrorStyle(monthInput,labelMonth), false)
+        //     : inputDate.getTime() > currentDate.getTime()
+        //     ? (yearError.innerHTML = "Must be in the past", addErrorStyle(yearInput,labelYear),false)
+        //     : dayInput.value > 30 && [4, 6, 9, 11].includes(Number(monthInput.value))
+        //     ? (dayError.innerHTML = "Must be a valid date", monthError.innerHTML = "Must be a valid date",addErrorStyle(dayInput, labelDay), addErrorStyle(monthInput,labelMonth), false)
+        //     : true
             
 
     if (isInputValid) {
@@ -106,9 +147,9 @@ function errorHandle () {
 }
 
 function calculateTime() {
-    removeErrorStateStyle();
+    removeErrorStyle();
     clearError();
-    if (!errorHandle()) {
+    if (!errorHandle()()) {
         return;
     }
     const currentDate = new Date();
