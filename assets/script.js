@@ -8,11 +8,35 @@ const yearInput = document.getElementById("year-input");
 const yearOutput = document.getElementById("output-year")
 const monthOutput = document.getElementById("output-month")
 const dayOutput = document.getElementById("output-day")
+const labelDay = document.getElementById("label-day");
+const labelMonth = document.getElementById("label-month");
+const labelYear = document.getElementById("label-year");
+
+function addErrorStateStyle (input, label) {
+    label.classList.add("invalid-state-text");
+    input.classList.add("invalid-state-style");
+}
+
+function removeErrorStateStyle() {
+    labelDay.classList.remove("invalid-state-style")
+    labelMonth.classList.remove("invalid-state-style")
+    labelYear.classList.remove("invalid-state-style")
+    labelDay.classList.remove("invalid-state-text");
+    labelMonth.classList.remove("invalid-state-text");
+    labelYear.classList.remove("invalid-state-text");
+    dayInput.classList.remove("invalid-state-style")
+    monthInput.classList.remove("invalid-state-style")
+    yearInput.classList.remove("invalid-state-style")
+    dayInput.classList.remove("invalid-state-text")
+    monthInput.classList.remove("invalid-state-text")
+    yearInput.classList.remove("invalid-state-text")
+}
 
 function clearError() {
     dayError.innerHTML = '';
     monthError.innerHTML = '';
     yearError.innerHTML = '';
+    
 }
 
 function updateCalculator (days) {
@@ -21,25 +45,30 @@ function updateCalculator (days) {
     yearOutput.innerHTML = Math.floor(days / 365);
 }
 
-function conditionCheck () {
+function errorHandle () {
 
     const currentDate = new Date();
     const inputDate = new Date(Number(yearInput.value), Number(monthInput.value) - 1, Number(dayInput.value));
 
     const isInputValid =
         dayInput.value > 31 && monthInput.value > 12 && inputDate.getTime() > currentDate.getTime()
-            ? (monthError.innerHTML = 'Must be a valid month', dayError.innerHTML = 'Must be a valid day', yearError.innerHTML = "Must be in the past", false)
+            ? (monthError.innerHTML = 'Must be a valid month', dayError.innerHTML = 'Must be a valid day', yearError.innerHTML = "Must be in the past", addErrorStateStyle(dayInput, labelDay),addErrorStateStyle(monthInput, labelMonth), addErrorStateStyle(yearInput, labelYear), false) // 3 at once
+            : dayInput.value > 31 && inputDate.getTime() > currentDate.getTime() ? (dayError.innerHTML = "Must be a valid day",yearError.innerHTML = "Must be a valid date",addErrorStateStyle(dayInput, labelDay), addErrorStateStyle(yearInput,labelYear), false) // Day and year error
+            : monthInput.value > 12 && inputDate.getTime() > currentDate.getTime() ? (yearError.innerHTML = "Must be in the past",monthError.innerHTML = "Must be a valid month",addErrorStateStyle(monthInput, labelMonth), addErrorStateStyle(yearInput,labelYear), false) //Month and year error
+            : monthInput.value > 12 && dayInput.value > 31 ? (monthError.innerHTML = 'Must be a valid month', addErrorStateStyle(monthInput, labelMonth),dayError.innerHTML = 'Must be a valid day', addErrorStateStyle(dayInput, labelDay),false)
             : monthInput.value > 12
-            ? (monthError.innerHTML = 'Must be a valid month', false)
+            ? (monthError.innerHTML = 'Must be a valid month', addErrorStateStyle(monthInput, labelMonth), false)
             : dayInput.value > 31
-            ? (dayError.innerHTML = 'Must be a valid day', false)
+            ? (dayError.innerHTML = 'Must be a valid day', addErrorStateStyle(dayInput, labelDay), false)
             : dayInput.value > 28 && monthInput.value == 2
-            ? (dayError.innerHTML = "Must be a valid date", false)
+            ? (dayError.innerHTML = "Must be a valid date",
+            monthError.innerHTML = "Must be a valid date", addErrorStateStyle(dayInput, labelDay), addErrorStateStyle(monthInput,labelMonth), false)
             : inputDate.getTime() > currentDate.getTime()
-            ? (yearError.innerHTML = "Must be in the past", false)
+            ? (yearError.innerHTML = "Must be in the past", addErrorStateStyle(yearInput,labelYear),false)
             : dayInput.value > 30 && [4, 6, 9, 11].includes(Number(monthInput.value))
-            ? (dayError.innerHTML = "Must be a valid date", false)
-            : true;
+            ? (dayError.innerHTML = "Must be a valid date", monthError.innerHTML = "Must be a valid date", false)
+            : true
+            
 
     if (isInputValid) {
         clearError();
@@ -49,8 +78,9 @@ function conditionCheck () {
 }
 
 function calculateTime() {
+    removeErrorStateStyle();
     clearError();
-    if (!conditionCheck()) {
+    if (!errorHandle()) {
         return;
     }
     const currentDate = new Date();
