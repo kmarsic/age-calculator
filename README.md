@@ -65,10 +65,10 @@ I really liked this project and I plan to do more projects like this one, with t
 
 ### Useful resources
 
-- [Hyperplexed](https://www.youtube.com/watch?v=W5oawMJaXbU) - I used this code as a basis for my animation, altough altering it just a bit to fit my purposes, converting it from a event listener to a function.
+- [Hyperplexed](https://www.youtube.com/watch?v=W5oawMJaXbU) - I used this code as a basis for my animation, although altering it just a bit to fit my purposes, converting it from an event listener to a function.
 
 
 ## Author
 Frontend Mentor - [https://www.frontendmentor.io/profile/kmarsic](https://www.frontendmentor.io/profile/kmarsic)
 
-LinkedIn - [https://www.linkedin.com/in/kmarsic/](https://www.linkedin.com/in/kristijan-mar%C5%A1i%C4%87-300447277/))
+LinkedIn - [https://www.linkedin.com/in/kmarsic/](https://www.linkedin.com/in/kristijan-mar%C5%A1i%C4%87-300447277/)
