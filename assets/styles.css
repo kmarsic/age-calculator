@@ -25,7 +25,7 @@ body {
     display:flex;
     height: 100vh;
     justify-content: center;
-    align-items: center;
+    align-items: center; 
     background-color: var(--off-white);
 
 }
@@ -35,8 +35,9 @@ body {
 
 input {
     padding: 0.5rem 1rem;
-    font-size: 24px;
+    font-size: 18px;
     width: 100%;
+    font-size: 14px;
     border-radius: 0.5rem;
     border:1px solid hsla(0, 1%, 44%, 0.2);
     cursor: pointer;
@@ -48,8 +49,8 @@ input:focus {
 
 .img-wrap  {
     position:absolute;
-    left: 200px;
-    top: 175px;
+    left: 120px;
+    top: 145px;
     z-index: 1;
 }
 
@@ -76,12 +77,12 @@ input:focus {
 
 hr {
     opacity: 0.5;
-    margin:2rem;
+    margin: 3rem 0.5rem;
 }
 
 .error-msg {
     margin-top: 0.5rem;
-    font-size: 12px;
+    font-size: 10px;
     font-style: italic;
     color: var(--light-red); 
     height: 1ch;
@@ -98,19 +99,19 @@ hr {
 .inner-top-wrapper {
     display:flex;
     color:var(--smokey-grey);
-    padding: 2rem 1rem;
+    padding: 1rem 0rem;
     max-width: 500px;
 }
 
 .input-field {
-    margin: 0 1rem 0 1rem;
+    margin: 0 0.5rem;
 }
 
 .inner-bot-wrapper {
-    font-size: 54px;
-    padding: 1rem;
+    font-size: 48px;
+    padding: 1rem 0rem;
 }
-j
+
 .output-text {
     font-style: italic;
     font-weight: 800;
@@ -124,10 +125,20 @@ j
 @media only screen and (min-width: 800px) {
     .wrapper {
         width:700px;
+        padding: 2rem;
+    }
+
+    input {
+        font-size: 24px;
     }
 
     .inner-bot-wrapper {
         font-size: 76px;
+        padding: 1rem;
+    }
+
+    .input-field {
+        margin: 0 1rem;
     }
 
     .img-wrap  {
@@ -136,10 +147,12 @@ j
         z-index: 1;
     }
 
+    .error-msg {
+        font-size: 12px;
+    }
+
     #arrow {
         width: 80px;
-        top: 150px;
-        left: 580px;
     }
 
 
