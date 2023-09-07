@@ -49,7 +49,7 @@ input:focus {
 
 .img-wrap  {
     position:absolute;
-    left: 120px;
+    left: 200px;
     top: 145px;
     z-index: 1;
 }
